@@ -1,0 +1,339 @@
+/* --- 1. Style Global et Corps --- */
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    /* Fond Gris foncé/Noir pour un contraste moderne */
+    background-color: #212121; 
+    color: #f0f0f0; /* Texte clair */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/* --- 2. Conteneur Principal (<menu>) --- */
+menu, .quiz-main-wrapper { 
+    background-color: #333333; /* Fond gris foncé */
+    border-radius: 25px; 
+    /* Ombre claire et Jaune Vif pour un effet de lumière */
+    box-shadow: 
+        5px 5px 15px rgba(0, 0, 0, 0.7), 
+        -5px -5px 15px rgba(255, 255, 255, 0.1),
+        0 0 20px #f7df1e; /* Effet de lueur Jaune */
+    padding: 45px 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 650px; 
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+menu:hover {
+    transform: translateY(-2px); 
+    box-shadow: 
+        10px 10px 20px rgba(0, 0, 0, 0.9), 
+        -10px -10px 20px rgba(255, 255, 255, 0.15),
+        0 0 30px #f7df1e; /* Lueur plus intense au survol */
+}
+
+/* --- 3. Titre et Score --- */
+h1 {
+    color: #f7df1e; /* Jaune JavaScript */
+    margin-bottom: 20px;
+    font-size: 2.8em;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(247, 223, 30, 0.7); /* Petit effet néon */
+}
+
+#score {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #e84a5f; /* Le rouge reste efficace pour l'accent */
+    margin-bottom: 35px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    background-color: #444; /* Fond gris légèrement plus clair */
+    box-shadow: inset 3px 3px 7px rgba(0, 0, 0, 0.7), inset -3px -3px 7px rgba(255, 255, 255, 0.1); 
+    width: auto;
+}
+
+
+/* --- 4. Zone du Quiz (Question et Options) --- */
+#conteneur { 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px; 
+}
+
+/* Style de la question (ID: #conteneur-questions) */
+#conteneur-questions {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #f0f0f0;
+    background-color: #444; 
+    padding: 25px;
+    border-radius: 15px;
+    text-align: left;
+    border-left: 8px solid #f7df1e; /* Bande de couleur Jaune JS */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); 
+}
+
+/* Liste des options (ID: #conteneur-option) */
+#conteneur-option {
+    list-style: none; 
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; 
+}
+
+
+/* Style des options de réponse (<li> dans #conteneur-option) */
+#conteneur-option li {
+    background-color: #333333; 
+    border: 1px solid #444; /* Bordure subtile */
+    border-radius: 15px;
+    padding: 18px;
+    font-size: 1.1em;
+    cursor: pointer;
+    color: #f0f0f0;
+    transition: all 0.2s ease;
+    text-align: center;
+    /* Ombre d'un bouton en relief sur fond sombre */
+    box-shadow: 
+        4px 4px 8px rgba(0, 0, 0, 0.8), 
+        -4px -4px 8px rgba(255, 255, 255, 0.05);
+}
+
+#conteneur-option li:hover {
+    background-color: #3e3e3e;
+    color: #f7df1e; /* Texte jaune au survol */
+    /* Effet enfoncé au survol */
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.7), inset -3px -3px 7px rgba(255, 255, 255, 0.1); 
+}
+
+/* Styles pour les options après la sélection (via JS) */
+#conteneur-option li.correct {
+    background-color: #28a745; /* Vert de succès classique */
+    color: white; 
+    font-weight: bold;
+    box-shadow: inset 0 0 5px #155724; 
+    pointer-events: none;
+}
+
+#conteneur-option li.incorrect {
+    background-color: #dc3545; /* Rouge d'échec classique */
+    color: white; 
+    box-shadow: inset 0 0 5px #721c24; 
+    pointer-events: none;
+}
+
+
+/* --- 5. Bouton "Next" (ID: #btnnext) --- */
+#btnnext {
+    margin-top: 35px;
+    padding: 15px 30px;
+    background-color: #f7df1e; /* Le bouton principal est JAUNE */
+    color: #333; /* Texte foncé sur le jaune */
+    border: none;
+    border-radius: 35px; 
+    font-size: 1.2em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+    /* Ombre subtile pour le jaune */
+    box-shadow: 
+        5px 5px 15px rgba(0, 0, 0, 0.5), 
+        0 0 10px #f7df1e;
+    align-self: flex-end; 
+}
+
+#btnnext:hover {
+    background-color: #ffd700; /* Jaune légèrement plus foncé */
+    box-shadow: inset 2px 2px 5px #c8b400, inset -3px -3px 7px #ffff99; 
+    color: #000;
+}
+
+#btnnext:active {
+    transform: translateY(1px);
+}
+
+
+/* --- 6. CSS Réactif (Adaptation mobile) --- */
+@media (max-width: 650px) {
+    /* ... (Les styles réactifs précédents sont maintenus) ... */
+}/* --- 1. Style Global et Corps --- */
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    /* Fond Gris foncé/Noir pour un contraste moderne */
+    background-color: #212121; 
+    color: #f0f0f0; /* Texte clair */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/* --- 2. Conteneur Principal (<menu>) --- */
+menu, .quiz-main-wrapper { 
+    background-color: #333333; /* Fond gris foncé */
+    border-radius: 25px; 
+    /* Ombre claire et Jaune Vif pour un effet de lumière */
+    box-shadow: 
+        5px 5px 15px rgba(0, 0, 0, 0.7), 
+        -5px -5px 15px rgba(255, 255, 255, 0.1),
+        0 0 20px #f7df1e; /* Effet de lueur Jaune */
+    padding: 45px 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 650px; 
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+menu:hover {
+    transform: translateY(-2px); 
+    box-shadow: 
+        10px 10px 20px rgba(0, 0, 0, 0.9), 
+        -10px -10px 20px rgba(255, 255, 255, 0.15),
+        0 0 30px #f7df1e; /* Lueur plus intense au survol */
+}
+
+/* --- 3. Titre et Score --- */
+h1 {
+    color: #f7df1e; /* Jaune JavaScript */
+    margin-bottom: 20px;
+    font-size: 2.8em;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(247, 223, 30, 0.7); /* Petit effet néon */
+}
+
+#score {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #e84a5f; /* Le rouge reste efficace pour l'accent */
+    margin-bottom: 35px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    background-color: #444; /* Fond gris légèrement plus clair */
+    box-shadow: inset 3px 3px 7px rgba(0, 0, 0, 0.7), inset -3px -3px 7px rgba(255, 255, 255, 0.1); 
+    width: auto;
+}
+
+
+/* --- 4. Zone du Quiz (Question et Options) --- */
+#conteneur { 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px; 
+}
+
+/* Style de la question (ID: #conteneur-questions) */
+#conteneur-questions {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #f0f0f0;
+    background-color: #444; 
+    padding: 25px;
+    border-radius: 15px;
+    text-align: left;
+    border-left: 8px solid #f7df1e; /* Bande de couleur Jaune JS */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); 
+}
+
+/* Liste des options (ID: #conteneur-option) */
+#conteneur-option {
+    list-style: none; 
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; 
+}
+
+
+/* Style des options de réponse (<li> dans #conteneur-option) */
+#conteneur-option li {
+    background-color: #333333; 
+    border: 1px solid #444; /* Bordure subtile */
+    border-radius: 15px;
+    padding: 18px;
+    font-size: 1.1em;
+    cursor: pointer;
+    color: #f0f0f0;
+    transition: all 0.2s ease;
+    text-align: center;
+    /* Ombre d'un bouton en relief sur fond sombre */
+    box-shadow: 
+        4px 4px 8px rgba(0, 0, 0, 0.8), 
+        -4px -4px 8px rgba(255, 255, 255, 0.05);
+}
+
+#conteneur-option li:hover {
+    background-color: #3e3e3e;
+    color: #f7df1e; /* Texte jaune au survol */
+    /* Effet enfoncé au survol */
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.7), inset -3px -3px 7px rgba(255, 255, 255, 0.1); 
+}
+
+/* Styles pour les options après la sélection (via JS) */
+#conteneur-option li.correct {
+    background-color: #28a745; /* Vert de succès classique */
+    color: white; 
+    font-weight: bold;
+    box-shadow: inset 0 0 5px #155724; 
+    pointer-events: none;
+}
+
+#conteneur-option li.incorrect {
+    background-color: #dc3545; /* Rouge d'échec classique */
+    color: white; 
+    box-shadow: inset 0 0 5px #721c24; 
+    pointer-events: none;
+}
+
+
+/* --- 5. Bouton "Next" (ID: #btnnext) --- */
+#btnnext {
+    margin-top: 35px;
+    padding: 15px 30px;
+    background-color: #f7df1e; /* Le bouton principal est JAUNE */
+    color: #333; /* Texte foncé sur le jaune */
+    border: none;
+    border-radius: 35px; 
+    font-size: 1.2em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+    /* Ombre subtile pour le jaune */
+    box-shadow: 
+        5px 5px 15px rgba(0, 0, 0, 0.5), 
+        0 0 10px #f7df1e;
+    align-self: flex-end; 
+}
+
+#btnnext:hover {
+    background-color: #ffd700; /* Jaune légèrement plus foncé */
+    box-shadow: inset 2px 2px 5px #c8b400, inset -3px -3px 7px #ffff99; 
+    color: #000;
+}
+
+#btnnext:active {
+    transform: translateY(1px);
+}
+
+
+/* --- 6. CSS Réactif (Adaptation mobile) --- */
+@media (max-width: 650px) {
+    /* ... (Les styles réactifs précédents sont maintenus) ... */
+}
