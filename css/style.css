@@ -1,339 +1,135 @@
-/* --- 1. Style Global et Corps --- */
+/* --- 1. Style Global et Corps (MODIFIÉ) --- */
 body {
-    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    /* Fond Gris foncé/Noir pour un contraste moderne */
-    background-color: #212121; 
-    color: #f0f0f0; /* Texte clair */
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #212121;
+    color: #f0f0f0;
+    
+    /* Clés pour l'adaptation et le non-scroll */
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    width: 100vw; /* Utilise 100% de la largeur du viewport */
+    height: 100vh; /* Utilise 100% de la hauteur du viewport */
+    overflow: hidden; /* EMPÊCHE TOUT SCROLL */
     margin: 0;
-    padding: 20px;
+    padding: 0; /* Suppression du padding du body pour utiliser toute la hauteur/largeur */
 }
 
-/* --- 2. Conteneur Principal (<menu>) --- */
+/* --- 2. Conteneur Principal (<menu>) (MODIFIÉ) --- */
 menu, .quiz-main-wrapper { 
-    background-color: #333333; /* Fond gris foncé */
-    border-radius: 25px; 
-    /* Ombre claire et Jaune Vif pour un effet de lumière */
+    background-color: #333333;
+    border-radius: 25px;
     box-shadow: 
         5px 5px 15px rgba(0, 0, 0, 0.7), 
         -5px -5px 15px rgba(255, 255, 255, 0.1),
-        0 0 20px #f7df1e; /* Effet de lueur Jaune */
-    padding: 45px 35px;
+        0 0 20px #f7df1e;
+        
+    /* Adaptation Cruciale : Utilisation des unités Viewport */
+    max-width: 90vw; /* Max 90% de la largeur du viewport */
+    max-height: 95vh; /* Max 95% de la hauteur du viewport */
+    
+    /* Permet au contenu de s'ajuster dans le conteneur */
+    box-sizing: border-box; 
+    overflow-y: auto; /* Permet un scroll UNIQUEMENT dans ce conteneur si le contenu est trop grand */
+    
+    padding: 4vh 4vw; /* Padding basé sur la taille du viewport (mieux que des px fixes) */
+    
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 650px; 
     width: 100%;
     transition: all 0.3s ease;
 }
 
-menu:hover {
-    transform: translateY(-2px); 
-    box-shadow: 
-        10px 10px 20px rgba(0, 0, 0, 0.9), 
-        -10px -10px 20px rgba(255, 255, 255, 0.15),
-        0 0 30px #f7df1e; /* Lueur plus intense au survol */
-}
-
-/* --- 3. Titre et Score --- */
+/* --- 3. Titre et Score (AJUSTÉ) --- */
 h1 {
-    color: #f7df1e; /* Jaune JavaScript */
-    margin-bottom: 20px;
-    font-size: 2.8em;
+    color: #f7df1e;
+    margin-bottom: 3vh; /* Marge basée sur la hauteur du viewport */
+    font-size: clamp(1.8em, 5vw, 2.8em); /* Taille adaptive : Minimum, Viewport, Maximum */
     font-weight: 900;
     letter-spacing: 2px;
     text-align: center;
-    text-shadow: 0 0 5px rgba(247, 223, 30, 0.7); /* Petit effet néon */
+    text-shadow: 0 0 5px rgba(247, 223, 30, 0.7);
 }
 
 #score {
-    font-size: 1.6em;
+    font-size: clamp(1.2em, 3.5vw, 1.6em); /* Taille adaptive */
     font-weight: 700;
-    color: #e84a5f; /* Le rouge reste efficace pour l'accent */
-    margin-bottom: 35px;
-    padding: 10px 20px;
+    color: #e84a5f;
+    margin-bottom: 4vh;
+    padding: 1.5vh 3vw;
     border-radius: 15px;
-    background-color: #444; /* Fond gris légèrement plus clair */
-    box-shadow: inset 3px 3px 7px rgba(0, 0, 0, 0.7), inset -3px -3px 7px rgba(255, 255, 255, 0.1); 
+    background-color: #444;
+    box-shadow: inset 3px 3px 7px rgba(0, 0, 0, 0.7), inset -3px -3px 7px rgba(255, 255, 255, 0.1);
     width: auto;
+    /* Rendre le texte non-cassable pour le score */
+    white-space: nowrap; 
 }
 
 
-/* --- 4. Zone du Quiz (Question et Options) --- */
+/* --- 4. Zone du Quiz (Question et Options) (AJUSTÉ) --- */
 #conteneur { 
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 25px; 
+    gap: 2vh; /* Écart basé sur la hauteur du viewport */
 }
 
 /* Style de la question (ID: #conteneur-questions) */
 #conteneur-questions {
-    font-size: 1.3em;
+    font-size: clamp(1em, 2.5vw, 1.3em); /* Taille adaptive */
     font-weight: 600;
     color: #f0f0f0;
     background-color: #444; 
-    padding: 25px;
+    padding: 2.5vh 3vw; /* Padding basé sur viewport */
     border-radius: 15px;
     text-align: left;
-    border-left: 8px solid #f7df1e; /* Bande de couleur Jaune JS */
+    border-left: 8px solid #f7df1e;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); 
 }
 
-/* Liste des options (ID: #conteneur-option) */
-#conteneur-option {
-    list-style: none; 
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px; 
-}
-
-
 /* Style des options de réponse (<li> dans #conteneur-option) */
 #conteneur-option li {
-    background-color: #333333; 
-    border: 1px solid #444; /* Bordure subtile */
+    background-color: #333333;
+    list-style: none; 
+    border: 1px solid #444;
     border-radius: 15px;
-    padding: 18px;
-    font-size: 1.1em;
+    padding: 2vh 2vw; /* Padding basé sur viewport */
+    font-size: clamp(0.9em, 2vw, 1.1em); /* Taille adaptive */
     cursor: pointer;
     color: #f0f0f0;
     transition: all 0.2s ease;
     text-align: center;
-    /* Ombre d'un bouton en relief sur fond sombre */
     box-shadow: 
         4px 4px 8px rgba(0, 0, 0, 0.8), 
         -4px -4px 8px rgba(255, 255, 255, 0.05);
 }
 
-#conteneur-option li:hover {
-    background-color: #3e3e3e;
-    color: #f7df1e; /* Texte jaune au survol */
-    /* Effet enfoncé au survol */
-    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.7), inset -3px -3px 7px rgba(255, 255, 255, 0.1); 
-}
-
-/* Styles pour les options après la sélection (via JS) */
-#conteneur-option li.correct {
-    background-color: #28a745; /* Vert de succès classique */
-    color: white; 
-    font-weight: bold;
-    box-shadow: inset 0 0 5px #155724; 
-    pointer-events: none;
-}
-
-#conteneur-option li.incorrect {
-    background-color: #dc3545; /* Rouge d'échec classique */
-    color: white; 
-    box-shadow: inset 0 0 5px #721c24; 
-    pointer-events: none;
-}
-
-
-/* --- 5. Bouton "Next" (ID: #btnnext) --- */
+/* --- 5. Bouton "Next" (ID: #btnnext) (AJUSTÉ) --- */
 #btnnext {
-    margin-top: 35px;
-    padding: 15px 30px;
-    background-color: #f7df1e; /* Le bouton principal est JAUNE */
-    color: #333; /* Texte foncé sur le jaune */
+    margin-top: 3vh; /* Marge basée sur la hauteur */
+    padding: 1.5vh 4vw; /* Padding basé sur viewport */
+    background-color: #f7df1e;
+    color: #333;
     border: none;
-    border-radius: 35px; 
-    font-size: 1.2em;
+    border-radius: 35px;
+    font-size: clamp(1em, 2.5vw, 1.2em); /* Taille adaptive */
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
-    /* Ombre subtile pour le jaune */
     box-shadow: 
         5px 5px 15px rgba(0, 0, 0, 0.5), 
         0 0 10px #f7df1e;
     align-self: flex-end; 
 }
 
-#btnnext:hover {
-    background-color: #ffd700; /* Jaune légèrement plus foncé */
-    box-shadow: inset 2px 2px 5px #c8b400, inset -3px -3px 7px #ffff99; 
-    color: #000;
-}
-
-#btnnext:active {
-    transform: translateY(1px);
-}
-
-
-/* --- 6. CSS Réactif (Adaptation mobile) --- */
+/* --- 6. CSS Réactif (Nettoyé et ajusté) --- */
 @media (max-width: 650px) {
-    /* ... (Les styles réactifs précédents sont maintenus) ... */
-}/* --- 1. Style Global et Corps --- */
-body {
-    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    /* Fond Gris foncé/Noir pour un contraste moderne */
-    background-color: #212121; 
-    color: #f0f0f0; /* Texte clair */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-}
-
-/* --- 2. Conteneur Principal (<menu>) --- */
-menu, .quiz-main-wrapper { 
-    background-color: #333333; /* Fond gris foncé */
-    border-radius: 25px; 
-    /* Ombre claire et Jaune Vif pour un effet de lumière */
-    box-shadow: 
-        5px 5px 15px rgba(0, 0, 0, 0.7), 
-        -5px -5px 15px rgba(255, 255, 255, 0.1),
-        0 0 20px #f7df1e; /* Effet de lueur Jaune */
-    padding: 45px 35px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 650px; 
-    width: 100%;
-    transition: all 0.3s ease;
-}
-
-menu:hover {
-    transform: translateY(-2px); 
-    box-shadow: 
-        10px 10px 20px rgba(0, 0, 0, 0.9), 
-        -10px -10px 20px rgba(255, 255, 255, 0.15),
-        0 0 30px #f7df1e; /* Lueur plus intense au survol */
-}
-
-/* --- 3. Titre et Score --- */
-h1 {
-    color: #f7df1e; /* Jaune JavaScript */
-    margin-bottom: 20px;
-    font-size: 2.8em;
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-align: center;
-    text-shadow: 0 0 5px rgba(247, 223, 30, 0.7); /* Petit effet néon */
-}
-
-#score {
-    font-size: 1.6em;
-    font-weight: 700;
-    color: #e84a5f; /* Le rouge reste efficace pour l'accent */
-    margin-bottom: 35px;
-    padding: 10px 20px;
-    border-radius: 15px;
-    background-color: #444; /* Fond gris légèrement plus clair */
-    box-shadow: inset 3px 3px 7px rgba(0, 0, 0, 0.7), inset -3px -3px 7px rgba(255, 255, 255, 0.1); 
-    width: auto;
-}
-
-
-/* --- 4. Zone du Quiz (Question et Options) --- */
-#conteneur { 
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 25px; 
-}
-
-/* Style de la question (ID: #conteneur-questions) */
-#conteneur-questions {
-    font-size: 1.3em;
-    font-weight: 600;
-    color: #f0f0f0;
-    background-color: #444; 
-    padding: 25px;
-    border-radius: 15px;
-    text-align: left;
-    border-left: 8px solid #f7df1e; /* Bande de couleur Jaune JS */
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); 
-}
-
-/* Liste des options (ID: #conteneur-option) */
-#conteneur-option {
-    list-style: none; 
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px; 
-}
-
-
-/* Style des options de réponse (<li> dans #conteneur-option) */
-#conteneur-option li {
-    background-color: #333333; 
-    border: 1px solid #444; /* Bordure subtile */
-    border-radius: 15px;
-    padding: 18px;
-    font-size: 1.1em;
-    cursor: pointer;
-    color: #f0f0f0;
-    transition: all 0.2s ease;
-    text-align: center;
-    /* Ombre d'un bouton en relief sur fond sombre */
-    box-shadow: 
-        4px 4px 8px rgba(0, 0, 0, 0.8), 
-        -4px -4px 8px rgba(255, 255, 255, 0.05);
-}
-
-#conteneur-option li:hover {
-    background-color: #3e3e3e;
-    color: #f7df1e; /* Texte jaune au survol */
-    /* Effet enfoncé au survol */
-    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.7), inset -3px -3px 7px rgba(255, 255, 255, 0.1); 
-}
-
-/* Styles pour les options après la sélection (via JS) */
-#conteneur-option li.correct {
-    background-color: #28a745; /* Vert de succès classique */
-    color: white; 
-    font-weight: bold;
-    box-shadow: inset 0 0 5px #155724; 
-    pointer-events: none;
-}
-
-#conteneur-option li.incorrect {
-    background-color: #dc3545; /* Rouge d'échec classique */
-    color: white; 
-    box-shadow: inset 0 0 5px #721c24; 
-    pointer-events: none;
-}
-
-
-/* --- 5. Bouton "Next" (ID: #btnnext) --- */
-#btnnext {
-    margin-top: 35px;
-    padding: 15px 30px;
-    background-color: #f7df1e; /* Le bouton principal est JAUNE */
-    color: #333; /* Texte foncé sur le jaune */
-    border: none;
-    border-radius: 35px; 
-    font-size: 1.2em;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
-    /* Ombre subtile pour le jaune */
-    box-shadow: 
-        5px 5px 15px rgba(0, 0, 0, 0.5), 
-        0 0 10px #f7df1e;
-    align-self: flex-end; 
-}
-
-#btnnext:hover {
-    background-color: #ffd700; /* Jaune légèrement plus foncé */
-    box-shadow: inset 2px 2px 5px #c8b400, inset -3px -3px 7px #ffff99; 
-    color: #000;
-}
-
-#btnnext:active {
-    transform: translateY(1px);
-}
-
-
-/* --- 6. CSS Réactif (Adaptation mobile) --- */
-@media (max-width: 650px) {
-    /* ... (Les styles réactifs précédents sont maintenus) ... */
+    /* Maintient les ajustements pour les petits écrans si nécessaire, mais les clamp/vw font déjà le gros du travail */
+    
+    /* S'assure que le conteneur principal reste grand sur mobile */
+    menu, .quiz-main-wrapper { 
+        padding: 6vh 6vw;
+        max-width: 95vw;
+    }
 }
